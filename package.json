@@ -1,0 +1,23 @@
+{
+  "name": "sistema-votacion",
+  "version": "1.0.0",
+  "description": "API sencilla para sistema de votación",
+  "main": "backend/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/app.js",
+    "dev": "nodemon backend/app.js"
+  },
+  "keywords": ["voting", "api", "express", "mongodb"],
+  "author": "Tu Nombre",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

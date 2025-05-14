@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Votación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Votación</h1>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('admin')">Administración</button>
+            <button class="tab-button" onclick="openTab('voter')">Votación</button>
+            <button class="tab-button" onclick="openTab('results')">Resultados</button>
+        </div>
+
+        <!-- Panel de administración -->
+        <div id="admin" class="tab-content active">
+            <h2>Agregar Candidato</h2>
+            <form id="candidate-form">
+                <div class="form-group">
+                    <label for="name">Nombre del Candidato:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Descripción:</label>
+                    <textarea id="description" required></textarea>
+                </div>
+                <button type="submit" class="btn">Agregar Candidato</button>
+            </form>
+        </div>
+
+        <!-- Panel de votación -->
+        <div id="voter" class="tab-content">
+            <h2>Emitir Voto</h2>
+            <div class="form-group">
+                <label for="voter-id">Identificador de Votante:</label>
+                <input type="text" id="voter-id" required>
+                <button onclick="checkVoter()" class="btn">Verificar</button>
+            </div>
+            
+            <div id="voting-section" style="display: none;">
+                <h3>Seleccione un candidato:</h3>
+                <div id="candidates-list" class="card-container"></div>
+                <button onclick="castVote()" class="btn">Votar</button>
+            </div>
+            
+            <div id="voter-message"></div>
+        </div>
+
+        <!-- Panel de resultados -->
+        <div id="results" class="tab-content">
+            <h2>Resultados de la Votación</h2>
+            <button onclick="loadResults()" class="btn">Actualizar Resultados</button>
+            
+            <div id="results-container">
+                <div id="results-list"></div>
+                <div id="winner-section" style="display: none;">
+                    <h3>Ganador:</h3>
+                    <div id="winner" class="winner-card"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
