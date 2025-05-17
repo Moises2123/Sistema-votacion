@@ -163,6 +163,8 @@ async function castVote() {
         return;
     }
 
+    console.log('Datos enviados al servidor:', { voterId: currentVoterId, candidateId: selectedCandidateId });
+
     try {
         const response = await fetch(`${API_URL}/vote`, {
             method: 'POST',

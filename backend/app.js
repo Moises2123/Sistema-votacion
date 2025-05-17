@@ -93,50 +93,45 @@ app.get("/voters/:identifier", async (req, res) => {
 
 // VOTAR
 app.post('/vote', async (req, res) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
     const { voterId, candidateId } = req.body;
+    console.log('Datos recibidos:', { voterId, candidateId });
 
     // Verifica si el votante existe y no ha votado
-    const voter = await Voter.findOne({ identifier: voterId }).session(session);
+    const voter = await Voter.findOne({ identifier: voterId });
     if (!voter) {
+      console.error('Votante no encontrado');
       return res.status(404).json({ message: 'Votante no encontrado' });
     }
 
     if (voter.hasVoted) {
+      console.error('El votante ya ha emitido su voto');
       return res.status(400).json({ message: 'El votante ya ha emitido su voto' });
     }
 
     // Verifica si el candidato existe
-    const candidate = await Candidate.findById(candidateId).session(session);
+    const candidate = await Candidate.findById(candidateId);
     if (!candidate) {
+      console.error('Candidato no encontrado');
       return res.status(404).json({ message: 'Candidato no encontrado' });
     }
 
     // Registra el voto
     voter.hasVoted = true;
     voter.candidate = candidateId;
-    await voter.save({ session });
+    await voter.save();
 
     candidate.votes += 1;
-    await candidate.save({ session });
+    await candidate.save();
 
-    // Commit de la transacción
-    await session.commitTransaction();
-
+    console.log('Voto registrado correctamente');
     return res.status(200).json({ message: 'Voto emitido correctamente' });
 
   } catch (error) {
-    await session.abortTransaction();
     console.error('Error al procesar el voto:', error);
     return res.status(500).json({ message: 'Error al procesar el voto' });
-  } finally {
-    session.endSession();
   }
 });
-
 // Obtener resultados
 app.get("/results", async (req, res) => {
   try {
